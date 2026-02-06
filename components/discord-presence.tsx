@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { Clock, Gamepad2, Music, Monitor, Smartphone, Globe } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Gamepad2, Music, Monitor, Smartphone, Globe } from 'lucide-react'
 
 interface Activity {
   name: string
@@ -77,14 +77,9 @@ const getEmojiUrl = (emoji: Activity['emoji']): string | null => {
 
 export function DiscordPresence() {
   const [data, setData] = useState<LanyardData | null>(null)
-  const [time, setTime] = useState('')
-  const [timeDigits, setTimeDigits] = useState<{ char: string; key: number }[]>([])
-  const [dayText, setDayText] = useState('')
   const [spotifyProgress, setSpotifyProgress] = useState(0)
   const [spotifyElapsed, setSpotifyElapsed] = useState('')
   const [spotifyDuration, setSpotifyDuration] = useState('')
-  const digitKeyRef = useRef(0)
-  const prevDigitsRef = useRef<{ char: string; key: number }[]>([])
 
   useEffect(() => {
     const fetchPresence = async () => {
@@ -101,60 +96,6 @@ export function DiscordPresence() {
 
     fetchPresence()
     const interval = setInterval(fetchPresence, 30000)
-    return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      
-      const weekday = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        weekday: 'long',
-      }).format(now)
-      
-      const day = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        day: 'numeric',
-      }).format(now)
-      
-      const timeStr = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-      }).format(now)
-      
-      // Add ordinal suffix to day
-      const dayNum = parseInt(day)
-      const suffix = dayNum === 1 || dayNum === 21 || dayNum === 31 ? 'st'
-        : dayNum === 2 || dayNum === 22 ? 'nd'
-        : dayNum === 3 || dayNum === 23 ? 'rd'
-        : 'th'
-      
-      setDayText(`${weekday} ${day}${suffix}`)
-      
-      // Create digits with unique keys that change only when the digit changes
-      const currentTimeStr = timeStr.toUpperCase()
-      const prevDigits = prevDigitsRef.current
-      
-      const newDigits = currentTimeStr.split('').map((char, i) => {
-        const prevDigit = prevDigits[i]
-        // Only assign new key if digit changed
-        if (!prevDigit || char !== prevDigit.char) {
-          digitKeyRef.current += 1
-          return { char, key: digitKeyRef.current }
-        }
-        return { char, key: prevDigit.key }
-      })
-      
-      prevDigitsRef.current = newDigits
-      setTimeDigits(newDigits)
-      setTime(`${weekday} ${day}${suffix} ${timeStr.toUpperCase()}`)
-    }
-
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
     return () => clearInterval(interval)
   }, [])
 
@@ -246,10 +187,10 @@ export function DiscordPresence() {
     : `https://cdn.discordapp.com/embed/avatars/${parseInt(data.discord_user.id) % 5}.png`
 
   return (
-    <div className="h-full p-6 rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-indigo-500/30 group">
+    <div className="h-full p-6 rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:scale-[1.02] hover:shadow-xl hover:shadow-indigo-500/10 group">
       <div className="relative z-10 h-full flex flex-col">
         {/* Header with avatar and status */}
-        <div className="flex items-center gap-4 mb-5">
+        <div className="flex items-center gap-4 mb-4">
           <div className="relative">
             <img
               src={avatarUrl}
@@ -263,14 +204,14 @@ export function DiscordPresence() {
             </div>
           </div>
           <div>
-            <p className="font-bold text-white text-lg leading-tight">
-              {data.discord_user.global_name || data.discord_user.username}
-            </p>
-            <div className="flex items-center gap-1.5 text-sm text-zinc-400">
-              <span>{statusLabels[data.discord_status]}</span>
+            <div className="flex items-center gap-2">
+              <p className="font-bold text-white text-lg leading-tight">
+                {data.discord_user.global_name || data.discord_user.username}
+              </p>
               <span className="text-zinc-600">•</span>
+              <span className="text-sm text-zinc-400">{statusLabels[data.discord_status]}</span>
               {data.active_on_discord_desktop && <span title="Desktop"><Monitor className="w-3.5 h-3.5 text-zinc-500" /></span>}
-              {data.active_on_discord_mobile && <span title="Mobile"><Smartphone className="w-3.5 h-3.5 text-zinc-500" /></span>}
+              {data.active_on_discord_mobile && <span title="Mobile"><Smartphone className="w-3.5 h-3.5" /></span>}
               {data.active_on_discord_web && <span title="Web"><Globe className="w-3.5 h-3.5 text-zinc-500" /></span>}
             </div>
             {customStatus?.state && (
@@ -294,7 +235,7 @@ export function DiscordPresence() {
 
         {/* Activity */}
         {currentActivity && (
-          <div className="flex-1 p-4 rounded-2xl bg-white/5 border border-white/5 mb-4">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
             <div className="flex gap-3 items-center">
               {/* Activity Image */}
               {activityImage && (
@@ -359,43 +300,10 @@ export function DiscordPresence() {
             )}
           </div>
         )}
-
-        {/* Local Time */}
-        <div className="mt-auto pt-4 border-t border-white/5 flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-white/5">
-            <Clock className="w-4 h-4 text-zinc-400" />
-          </div>
-          <div>
-            <p className="text-xs text-zinc-500 uppercase tracking-wider">Local Time</p>
-            <div className="flex items-baseline gap-1">
-              <span className="text-sm text-zinc-400">{dayText}</span>
-              <div className="flex">
-                {timeDigits.map((digit) => (
-                  <span 
-                    key={digit.key} 
-                    className="text-lg font-mono font-bold text-white tabular-nums inline-block"
-                    style={{
-                      animation: digit.char !== ' ' && digit.char !== ':' ? 'digitPop 0.3s ease-out' : 'none',
-                    }}
-                  >
-                    {digit.char}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       
       {/* Decorative glow */}
       <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      <style jsx>{`
-        @keyframes digitPop {
-          0% { transform: translateY(-4px); opacity: 0.5; }
-          100% { transform: translateY(0); opacity: 1; }
-        }
-      `}</style>
     </div>
   )
 }
