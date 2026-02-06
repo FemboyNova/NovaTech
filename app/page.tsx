@@ -122,7 +122,7 @@ export default function Page() {
                   </h1>
                   
                   <p className="text-lg text-zinc-400 leading-relaxed max-w-md">
-                    20 Year old, Dev / Community Manager
+                    20yo Dev & Community Manager. I make small projects in my free time.
                   </p>
                 </div>
                 
