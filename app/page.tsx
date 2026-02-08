@@ -151,7 +151,7 @@ export default function Page() {
         )}
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-16">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-8 pt-24 md:px-8 md:py-16 md:pt-24">
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[minmax(120px,auto)]">
           
@@ -240,7 +240,7 @@ export default function Page() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-zinc-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative z-10 h-full flex flex-col justify-between">
-              <XIcon className="w-8 h-8 text-zinc-400 group-hover:text-white group-hover:scale-110 group-hover:-rotate-12 transition-all duration-300" />
+              <XIcon className="w-8 h-8 text-zinc-400 group-hover:text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
               <p className="text-lg font-semibold text-white group-hover:translate-x-1 transition-transform duration-300">@Femboy_nova</p>
             </div>
           </a>
@@ -255,7 +255,7 @@ export default function Page() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#5865F2]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative z-10 h-full flex flex-col justify-between">
-              <DiscordIcon className="w-8 h-8 text-zinc-400 group-hover:text-[#5865F2] group-hover:scale-110 group-hover:-rotate-12 transition-all duration-300" />
+              <DiscordIcon className="w-8 h-8 text-zinc-400 group-hover:text-[#5865F2] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300" />
               <p className="text-lg font-semibold text-white group-hover:translate-x-1 transition-transform duration-300">Join Server</p>
             </div>
           </a>
@@ -268,7 +268,7 @@ export default function Page() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative z-10 h-full flex flex-col justify-between">
-              <Mail className="w-8 h-8 text-zinc-400 group-hover:text-pink-500 group-hover:scale-110 group-hover:-rotate-12 transition-all duration-300" />
+              <Mail className="w-8 h-8 text-zinc-400 group-hover:text-pink-500 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
               <p className="text-lg font-semibold text-white group-hover:translate-x-1 transition-transform duration-300">Bread@Novatech.gg</p>
             </div>
           </a>
@@ -344,7 +344,7 @@ export default function Page() {
             target="_blank"
             rel="noopener noreferrer"
             className={`md:col-span-2 lg:col-span-2 group transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-            style={{ transitionDelay: '700ms' }}
+            style={{ transitionDelay: '350ms' }}
           >
             <div className="relative h-full p-6 rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-cyan-500/50 hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/10">
               {/* Decorative gradient background */}
