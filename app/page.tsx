@@ -14,6 +14,7 @@ const DiscordIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 import { DiscordPresence } from '@/components/discord-presence'
+import { Weather } from '@/components/weather'
 import { useEffect, useState, useRef } from 'react'
 
 // Seeded random for consistent server/client rendering
@@ -213,6 +214,14 @@ export default function Page() {
             style={{ transitionDelay: '100ms' }}
           >
             <DiscordPresence />
+          </div>
+
+          {/* Weather Card */}
+          <div 
+            className={`md:col-span-1 lg:col-span-2 row-span-2 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: '150ms' }}
+          >
+            <Weather />
           </div>
 
           {/* GitHub Link */}
