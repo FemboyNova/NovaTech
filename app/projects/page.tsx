@@ -3,172 +3,172 @@
 import { Github, ExternalLink } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { Background } from '@/components/background'
 
 const ChromeIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728z"/>
+    <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728z" />
   </svg>
 )
 
-// Seeded random for consistent star positions
-function seededRandom(seed: number) {
-  const x = Math.sin(seed) * 10000
-  return x - Math.floor(x)
-}
-
-const generateStars = () =>
-  [...Array(50)].map((_, i) => ({
-    id: i,
-    left: seededRandom(i * 1) * 100,
-    top: seededRandom(i * 2 + 100) * 100,
-    delay: seededRandom(i * 3 + 200) * 5,
-    duration: 3 + seededRandom(i * 4 + 300) * 4,
-  }))
-
-const stars = generateStars()
-
 const projects = [
   {
+    index: '01',
+    title: 'Salad Tools',
+    description:
+      'A collection of tools built for Salad miners — including the Machine Renamer, demand checker, and more. All in one place.',
+    tech: ['JavaScript', 'Web', 'Browser Extension'],
+    live: 'https://salad-tools.novatech.gg',
+  },
+  {
+    index: '02',
     title: 'Salad Machine Renamer',
-    description: 'A utility tool for renaming and managing Salad machines. Makes it easy to organize and identify your salad rigs.',
+    description:
+      'A utility tool for renaming and managing Salad machines. Makes it easy to organize and identify your salad rigs.',
     tech: ['JavaScript', 'Browser Extension'],
-    github: 'https://github.com/FemboyNova/Salad-Machine-Renamer',
+    github: 'https://github.com/NovaXen/Salad-Machine-Renamer',
     firefox: 'https://addons.mozilla.org/en-GB/firefox/addon/salad-machine-renamer/',
     chrome: 'https://chromewebstore.google.com/detail/apehjenffjjamcpghbahankhcheepkdn',
   },
   {
+    index: '03',
     title: 'NovaTech Website',
-    description: 'My personal website built with Next.js, Tailwind CSS, and TypeScript. Features a sleek dark theme with animated elements.',
+    description:
+      'My personal website built with Next.js, Tailwind CSS, and TypeScript. Features a clean dark theme with animated elements.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    github: 'https://github.com/FemboyNova/NovaTech',
+    github: 'https://github.com/NovaXen/NovaTech',
     live: 'https://novatech.gg',
   },
 ]
 
 export default function ProjectsPage() {
   const [mounted, setMounted] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white relative overflow-x-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 pointer-events-none">
-        {/* Gradient orbs */}
-        <div 
-          className="absolute w-[600px] h-[600px] rounded-full opacity-30 blur-[120px] transition-all duration-1000 ease-out"
-          style={{
-            background: 'radial-gradient(circle, rgba(236,72,153,0.4) 0%, transparent 70%)',
-            left: mousePosition.x - 300,
-            top: mousePosition.y - 300,
-          }}
-        />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-violet-500/20 to-transparent rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-cyan-500/20 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-        
-        {/* Grid pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
-          }}
-        />
-        
-        {/* Noise texture */}
-        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
-        
-        {/* Floating Stars */}
-        {mounted && (
-          <div className="stars-container">
-            {stars.map((star) => (
-              <div
-                key={star.id}
-                className="star"
-                style={{
-                  left: `${star.left}%`,
-                  top: `${star.top}%`,
-                  animationDelay: `${star.delay}s`,
-                  animationDuration: `${star.duration}s`,
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+    <div className="min-h-screen" style={{ background: '#0e0d0c', color: '#ede8e3' }}>
+      <Background />
 
-      {/* Content */}
-      <main className="relative z-10 mx-auto max-w-6xl px-4 py-8 pt-24 md:px-8 md:py-16 md:pt-24 overflow-visible">
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-5xl md:text-6xl font-black tracking-tight">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-violet-400 to-cyan-400 animate-gradient">
-              Projects
-            </span>
+      <main className="relative z-10 max-w-5xl mx-auto px-6 md:px-10">
+        {/* ── Header ─────────────────────────────────────────────────────────── */}
+        <header
+          className={`pt-28 pb-10 transition-all duration-700 ${
+            mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
+          style={{ borderBottom: '1px solid rgba(255,255,255,0.055)' }}
+        >
+          <span
+            className="text-[11px] tracking-[0.2em] uppercase font-medium block mb-2"
+            style={{ color: '#e8945a' }}
+          >
+            My Work
+          </span>
+          <h1
+            className="leading-[0.88] tracking-tight"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontStyle: 'italic',
+              fontSize: 'clamp(3rem, 9vw, 7rem)',
+            }}
+          >
+            Projects<span style={{ color: '#e8945a' }}>.</span>
           </h1>
-          <p className="text-lg text-zinc-400">
-            A collection of things I&apos;ve built and contributed to
+          <p className="mt-5 text-base md:text-lg leading-relaxed max-w-lg" style={{ color: '#8a8078' }}>
+            A collection of things I&apos;ve built and contributed to.
           </p>
-        </div>
+        </header>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 p-4">
-          {projects.map((project, index) => (
+        {/* ── Project list ────────────────────────────────────────────────────── */}
+        <div className="mt-8 pb-20 space-y-4">
+          {projects.map((project, i) => (
             <div
-              key={index}
-              className={`group transition-all duration-700 hover:scale-[1.02] hover:-translate-y-1 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              key={project.index}
+              className={`group p-6 rounded-2xl transition-all duration-700 ${
+                mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+              }`}
+              style={{
+                background: '#161412',
+                border: '1px solid rgba(255,255,255,0.055)',
+                transitionDelay: `${i * 80 + 100}ms`,
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLElement
+                el.style.borderColor = 'rgba(232,148,90,0.3)'
+                el.style.background = '#1a1714'
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement
+                el.style.borderColor = 'rgba(255,255,255,0.055)'
+                el.style.background = '#161412'
+              }}
             >
-              <div className="relative h-full p-6 rounded-3xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 transition-all duration-300 hover:border-pink-500/50 hover:shadow-xl hover:shadow-pink-500/10 cursor-default">
-                <div className="relative z-10">
-                  <h3 className="mb-2 text-xl font-bold text-white">{project.title}</h3>
-                  <p className="mb-4 text-sm text-zinc-400 leading-relaxed">{project.description}</p>
+              <div className="flex items-start gap-5">
+                {/* Index number */}
+                <span
+                  className="text-4xl leading-none flex-shrink-0 select-none mt-0.5"
+                  style={{
+                    fontFamily: "'Instrument Serif', serif",
+                    fontStyle: 'italic',
+                    color: 'rgba(232,148,90,0.2)',
+                  }}
+                >
+                  {project.index}
+                </span>
 
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-zinc-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-end">
-                    <div className="flex items-center gap-2">
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <h2 className="text-lg font-medium" style={{ color: '#ede8e3' }}>
+                      {project.title}
+                    </h2>
+                    {/* Action links */}
+                    <div className="flex items-center gap-1 flex-shrink-0">
                       <a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
+                        className="p-2 rounded-lg transition-all duration-200"
                         title="GitHub"
+                        style={{ color: '#4a4540' }}
+                        onMouseEnter={(e) => {
+                          const el = e.currentTarget as HTMLElement
+                          el.style.color = '#ede8e3'
+                          el.style.background = 'rgba(255,255,255,0.05)'
+                        }}
+                        onMouseLeave={(e) => {
+                          const el = e.currentTarget as HTMLElement
+                          el.style.color = '#4a4540'
+                          el.style.background = 'transparent'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <Github className="h-5 w-5" />
+                        <Github className="w-4 h-4" />
                       </a>
                       {project.firefox && (
                         <a
                           href={project.firefox}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-lg p-2 transition-colors hover:bg-white/5 group/firefox"
+                          className="p-2 rounded-lg transition-all duration-200"
                           title="Firefox Add-on"
+                          style={{ opacity: 0.45 }}
+                          onMouseEnter={(e) =>
+                            ((e.currentTarget as HTMLElement).style.opacity = '1')
+                          }
+                          onMouseLeave={(e) =>
+                            ((e.currentTarget as HTMLElement).style.opacity = '0.45')
+                          }
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Image
                             src="/Firefox.svg"
                             alt="Firefox"
-                            width={20}
-                            height={20}
-                            className="opacity-60 group-hover/firefox:opacity-100 transition-opacity"
+                            width={16}
+                            height={16}
+                            className="object-contain"
                             unoptimized
                           />
                         </a>
@@ -178,10 +178,22 @@ export default function ProjectsPage() {
                           href={project.chrome}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-white/5 hover:text-blue-400"
+                          className="p-2 rounded-lg transition-all duration-200"
                           title="Chrome Extension"
+                          style={{ color: '#4a4540' }}
+                          onMouseEnter={(e) => {
+                            const el = e.currentTarget as HTMLElement
+                            el.style.color = '#ede8e3'
+                            el.style.background = 'rgba(255,255,255,0.05)'
+                          }}
+                          onMouseLeave={(e) => {
+                            const el = e.currentTarget as HTMLElement
+                            el.style.color = '#4a4540'
+                            el.style.background = 'transparent'
+                          }}
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          <ChromeIcon className="h-5 w-5" />
+                          <ChromeIcon className="w-4 h-4" />
                         </a>
                       )}
                       {project.live && (
@@ -189,57 +201,52 @@ export default function ProjectsPage() {
                           href={project.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white"
-                          title="Live Demo"
+                          className="p-2 rounded-lg transition-all duration-200"
+                          title="Live Site"
+                          style={{ color: '#4a4540' }}
+                          onMouseEnter={(e) => {
+                            const el = e.currentTarget as HTMLElement
+                            el.style.color = '#e8945a'
+                            el.style.background = 'rgba(232,148,90,0.08)'
+                          }}
+                          onMouseLeave={(e) => {
+                            const el = e.currentTarget as HTMLElement
+                            el.style.color = '#4a4540'
+                            el.style.background = 'transparent'
+                          }}
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          <ExternalLink className="h-5 w-5" />
+                          <ExternalLink className="w-4 h-4" />
                         </a>
                       )}
                     </div>
+                  </div>
+
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#6b6560' }}>
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 rounded-lg text-xs font-medium"
+                        style={{
+                          background: 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                          color: '#6b6560',
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           ))}
-        </div>npm 
+        </div>
       </main>
-
-      <style jsx>{`
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 4s ease infinite;
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.2); }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-        .stars-container {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-        }
-        .star {
-          position: absolute;
-          width: 2px;
-          height: 2px;
-          background: white;
-          border-radius: 50%;
-          animation: twinkle ease-in-out infinite, float ease-in-out infinite;
-          box-shadow: 0 0 4px rgba(255,255,255,0.5);
-        }
-      `}</style>
     </div>
   )
 }

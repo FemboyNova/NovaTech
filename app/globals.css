@@ -1,69 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #0a0a0f;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0e0d0c;
+  color: #ede8e3;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 148, 90, 0.3);
+}
+
+::selection {
+  background: rgba(232, 148, 90, 0.22);
+  color: #ede8e3;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Selection styling */
-::selection {
-  background: rgba(236, 72, 153, 0.3);
-  color: white;
+  .font-display {
+    font-family: 'Instrument Serif', serif;
+  }
+  .font-code {
+    font-family: 'JetBrains Mono', monospace;
+  }
 }
 
 @layer base {
   :root {
-    --background: 220 25% 4%;
-    --foreground: 0 0% 98%;
-    --card: 220 20% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 220 25% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 330 85% 60%;
+    --background: 30 10% 5%;
+    --foreground: 30 20% 92%;
+    --card: 30 8% 9%;
+    --card-foreground: 30 20% 92%;
+    --popover: 30 10% 7%;
+    --popover-foreground: 30 20% 92%;
+    --primary: 24 75% 63%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 180 75% 50%;
-    --secondary-foreground: 220 25% 6%;
-    --muted: 220 20% 15%;
-    --muted-foreground: 220 10% 60%;
-    --accent: 280 75% 65%;
+    --secondary: 30 8% 12%;
+    --secondary-foreground: 30 20% 92%;
+    --muted: 30 8% 15%;
+    --muted-foreground: 30 10% 52%;
+    --accent: 24 75% 63%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 20% 15%;
-    --input: 220 20% 15%;
-    --ring: 330 85% 60%;
-    --radius: 1rem;
+    --border: 30 8% 11%;
+    --input: 30 8% 11%;
+    --ring: 24 75% 63%;
+    --radius: 0.75rem;
   }
 }
 
